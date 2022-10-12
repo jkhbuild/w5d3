@@ -1,7 +1,7 @@
 
 PRAGMA foreign_keys = ON;
-DROP TABLE IF EXISTS questions_likes;
-DROP TABLE IF EXISTS questions_follows;
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS question_follows;
 DROP TABLE IF EXISTS replies;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS users;
@@ -18,7 +18,7 @@ CREATE TABLE questions (
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
@@ -28,7 +28,7 @@ CREATE TABLE question_follows (
     questions TEXT NOT NULL,
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE replies (
     body TEXT NOT NULL,
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
     FOREIGN KEY (question_id) REFERENCES questions(id)
     
 );
@@ -51,17 +51,17 @@ CREATE TABLE question_likes(
     questions TEXT NOT NULL,
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO
-    users(id, first_name, last_name)
+    users(first_name, last_name)
 VALUES
-    (1,'kunju', 'kim');
+    ('kunju', 'kim');
 
 INSERT INTO
-    questions(id,title, body,user_id)
+    questions (title, body, user_id)
 VALUES
-    (1,'orm?', 'How do you do this????!',1);
+    ('orm', 'How do you do this', (SELECT id FROM users WHERE first_name = 'kunju'));
 
