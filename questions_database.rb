@@ -50,7 +50,7 @@ class Users
 
     def update
         raise "#{self} not in database" unless self.id
-        QuestionsDBConnection.instance.execute(<<-SQL, self.first_name, self.last_name)
+        QuestionsDBConnection.instance.execute(<<-SQL, self.first_name, self.last_name, self.id)
             UPDATE
             users
             SET
